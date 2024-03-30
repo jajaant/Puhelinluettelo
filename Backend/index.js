@@ -24,10 +24,12 @@ let persons = [
     }
   ]
 
+const cors = require('cors')
 var morgan = require('morgan')
 
 app.use(express.json())
 app.use(morgan('tiny'))
+app.use(cors())
 
 
 const idGenerator = () => {
@@ -39,7 +41,7 @@ const idGenerator = () => {
 
 app.post('/api/persons', (req, res) => {
   const body = req.body
-  
+  console.log(req.body)
   if(!body.name || !body.number) {
     return res.status(400).json({
       error: 'Required information is missing'
@@ -97,7 +99,7 @@ app.delete('/api/persons/:id', (req, res) => {
 
 
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
-  })
+  console.log(`Server running on port ${PORT}`)
+})
